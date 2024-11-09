@@ -137,10 +137,11 @@ function App() {
       <div className="d-flex mb-2">
         <Form.Control
           type="text"
-          placeholder="Descreva a Tarefa"
+          placeholder="Descreva a Tarefa (Máx. 24 Caracteres)"
           className="bg-light"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
+          maxLength={24} // Limita o input a 24 caracteres
         />
         <button
           type="button"
@@ -154,40 +155,47 @@ function App() {
 
       {filteredTasks.map((task) => (
         <div key={task.id} className="d-flex align-items-center border-bottom py-2">
-            <Form.Check.Input
-              checked={task.isCompleted}
-              onChange={() => handleToggleComplete(task.id, task.isCompleted)}
-              name="check-completed-button"
-              aria-label="check-completed-button"
-            />
+          <Form.Check.Input
+            checked={task.isCompleted}
+            onChange={() => handleToggleComplete(task.id, task.isCompleted)}
+            disabled={editTaskId === task.id} // Desabilita o checkbox se a tarefa está em edição
+            name="check-completed-button"
+            aria-label="check-completed-button"
+          />
 
 
           <div className="w-100 ms-3">
             <div className="d-flex w-100 align-items-center justify-content-between">
               <span>
-                {editTaskId === task.id ? (
-                  <Form.Control
-                    type="text"
-                    value={editTaskName}
-                    onChange={(e) => setEditTaskName(e.target.value)}
-                    onBlur={() => handleEditTask(task.id)}
-                  />
-                ) : (
-                  <span className={task.isCompleted ? "task-completed" : "task-pending"} style={{ textDecoration: task.isCompleted ? 'line-through' : 'none' }}>
-                    {task.description}
-                  </span>
-                )}
-                {!task.isCompleted && (
+                <div className="d-flex align-items-center">
+                  {editTaskId === task.id ? (
+                    <Form.Control
+                      type="text"
+                      value={editTaskName}
+                      onChange={(e) => setEditTaskName(e.target.value)}
+                      onBlur={() => handleEditTask(task.id)}
+                      maxLength={24} // Limita o input a 24 caracteres
+                    />
+                  ) : (
+                    <span className={task.isCompleted ? "task-completed" : "task-pending"} style={{ textDecoration: task.isCompleted ? 'line-through' : 'none' }}>
+                      {task.description}
+                    </span>
+                  )}
+                  {!task.isCompleted && (
+                    <button
+                      className={`btn ms-2 btn-sm edit-task-button ${editTaskId === task.id ? 'btn-primary text-light w-50' : ''}`}
+                      onClick={() => handleEditTask(task.id)}
+                      name="edit-task-button"
+                      style={{ transition: 'all 0.2s' }}
+                      onMouseEnter={(e) => e.target.classList.add('hover')}
+                      onMouseLeave={(e) => e.target.classList.remove('hover')}
+                    >
+                      <FontAwesomeIcon icon={editTaskId === task.id ? faCheckCircle : faEdit} />
+                      {editTaskId === task.id ? ' Atualizar' : ''}
+                    </button>
 
-                  <button
-                  className="btn btn-sm"
-                  onClick={() => handleEditTask(task.id)}
-                  name="edit-task-button"
-                >
-                  <FontAwesomeIcon icon={faEdit} /> Edit
-                </button>
-                
-                )}
+                  )}
+                </div>
               </span>
               <button
                 className="btn btn-sm"
