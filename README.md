@@ -1,3 +1,11 @@
+![React](https://img.shields.io/badge/-React-61DBFB?style=for-the-badge&labelColor=black&logo=react&logoColor=61DBFB)
+![Bootstrap](https://img.shields.io/badge/-Bootstrap-7952B3?style=for-the-badge&labelColor=black&logo=bootstrap&logoColor=7952B3)
+![React Bootstrap](https://img.shields.io/badge/-React_Bootstrap-61DAFB?style=for-the-badge&labelColor=black&logo=react&logoColor=61DAFB)
+![Axios](https://img.shields.io/badge/-Axios-5A29E4?style=for-the-badge&labelColor=black&logo=axios&logoColor=5A29E4)
+![Font Awesome](https://img.shields.io/badge/-Font_Awesome-339AF0?style=for-the-badge&labelColor=black&logo=fontawesome&logoColor=339AF0)
+![Cypress](https://img.shields.io/badge/-Cypress-17202C?style=for-the-badge&labelColor=black&logo=cypress&logoColor=white)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
