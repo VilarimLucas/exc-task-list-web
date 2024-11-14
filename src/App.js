@@ -35,18 +35,22 @@ function App() {
     }
     try {
       const response = await axios.post(API_URL, { description: newTask, isCompleted: false });
-      setTasks([...tasks, response.data]);
+      setTasks([response.data, ...tasks]); // Adiciona a nova tarefa no início do array
       setNewTask('');
     } catch (error) {
       console.error('Erro ao adicionar tarefa:', error);
     }
   };
 
+
   const handleEditTask = async (id) => {
     if (editTaskId === id) {
       try {
         await axios.put(`${API_URL}/${id}`, { description: editTaskName });
-        setTasks(tasks.map((task) => (task.id === id ? { ...task, description: editTaskName } : task)));
+        setTasks([
+          { ...tasks.find((task) => task.id === id), description: editTaskName },
+          ...tasks.filter((task) => task.id !== id)
+        ]); // Coloca a tarefa editada no início do array
         setEditTaskId(null);
         setEditTaskName('');
       } catch (error) {
@@ -57,6 +61,7 @@ function App() {
       setEditTaskName(tasks.find((task) => task.id === id).description);
     }
   };
+
 
   const handleToggleComplete = async (id, isCompleted) => {
     try {
@@ -161,6 +166,7 @@ function App() {
             disabled={editTaskId === task.id} // Desabilita o checkbox se a tarefa está em edição
             name="check-completed-button"
             aria-label="check-completed-button"
+            id="check-completed"
           />
 
 
@@ -171,6 +177,7 @@ function App() {
                   {editTaskId === task.id ? (
                     <Form.Control
                       type="text"
+                      name="input-edit-task"
                       value={editTaskName}
                       onChange={(e) => setEditTaskName(e.target.value)}
                       onBlur={() => handleEditTask(task.id)}
@@ -201,6 +208,7 @@ function App() {
                 className="btn btn-sm"
                 onClick={() => handleDeleteTask(task.id)}
                 name="delete-task-button"
+                id="delete-task-button"
               >
                 <FontAwesomeIcon icon={faTimes} />
               </button>
